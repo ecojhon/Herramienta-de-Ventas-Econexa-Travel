@@ -1,360 +1,123 @@
-import React, { useState, useMemo } from 'react';
-import { Search, Download, X, MapPin, Calendar, Users } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Econexa Travel – Sales Tool</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-export default function EconexaSalesTool() {
-  const [currentTab, setCurrentTab] = useState(0);
-  const [language, setLanguage] = useState('es');
-  const [searchTerm, setSearchTerm] = useState('');
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background:#f4f6f8;
+  margin:0;
+}
+header {
+  background:#1e8449;
+  color:#fff;
+  padding:20px;
+}
+main {
+  max-width:1200px;
+  margin:auto;
+  padding:20px;
+}
+.section {
+  background:#fff;
+  padding:20px;
+  border-radius:6px;
+  margin-bottom:20px;
+}
+.hidden { display:none; }
+button {
+  padding:8px 14px;
+  margin:4px;
+  border-radius:20px;
+  border:1px solid #1e8449;
+  background:#fff;
+  cursor:pointer;
+}
+button:hover {
+  background:#1e8449;
+  color:#fff;
+}
+.package {
+  border:1px solid #ddd;
+  padding:15px;
+  border-radius:6px;
+  margin-bottom:10px;
+}
+.price { color:#1e8449; font-weight:bold; }
+</style>
+</head>
 
-  const packages = [
-    { id: 1, nameEs: 'Nuquí - Avistamiento de Ballenas', nameEn: 'Nuquí - Whale Watching', regionEs: 'Pacífico', regionEn: 'Pacific', duration: '4D/3N', price: 1850000, people: '2-8', seasonEs: 'Jul-Oct', seasonEn: 'Jul-Oct', tags: ['Pacífico', 'Pacific', 'Ballenas', 'Whales', 'Playa', 'Beach'], descEs: 'Experiencia única de avistamiento de ballenas jorobadas en el Pacífico colombiano.', descEn: 'Unique humpback whale watching experience in the Colombian Pacific.', difficulty: 'Fácil' },
-    { id: 2, nameEs: 'Ciudad Perdida - Trek 4 Días', nameEn: 'Lost City - 4 Day Trek', regionEs: 'Caribe', regionEn: 'Caribbean', duration: '4D/3N', price: 1650000, people: '2-12', seasonEs: 'Todo el año', seasonEn: 'Year-round', tags: ['Caribe', 'Caribbean', 'Senderismo', 'Hiking', 'Cultural'], descEs: 'Trek de 4 días a la Ciudad Perdida, sitio arqueológico sagrado.', descEn: '4-day trek to the Lost City, sacred archaeological site.', difficulty: 'Moderado-Alto' },
-    { id: 3, nameEs: 'Tayrona & Minca', nameEn: 'Tayrona & Minca', regionEs: 'Caribe', regionEn: 'Caribbean', duration: '5D/4N', price: 1450000, people: '2-10', seasonEs: 'Todo el año', seasonEn: 'Year-round', tags: ['Caribe', 'Caribbean', 'Playa', 'Beach', 'Montaña', 'Mountain'], descEs: 'Combinación perfecta de playa en Tayrona y naturaleza en Minca.', descEn: 'Perfect combination of beach at Tayrona and nature in Minca.', difficulty: 'Fácil-Moderado' },
-    { id: 4, nameEs: 'Nevado del Cocuy', nameEn: 'Cocuy Snow Peak', regionEs: 'Andes', regionEn: 'Andes', duration: '5D/4N', price: 2100000, people: '2-8', seasonEs: 'Dic-Mar', seasonEn: 'Dec-Mar', tags: ['Andes', 'Montañismo', 'Mountaineering', 'Glaciares', 'Glaciers'], descEs: 'Desafío de alta montaña en uno de los nevados más impresionantes.', descEn: 'High mountain challenge in one of the most impressive snow peaks.', difficulty: 'Alto' },
-    { id: 5, nameEs: 'La Guajira', nameEn: 'La Guajira', regionEs: 'Caribe', regionEn: 'Caribbean', duration: '4D/3N', price: 1550000, people: '2-8', seasonEs: 'Todo el año', seasonEn: 'Year-round', tags: ['Caribe', 'Caribbean', 'Desierto', 'Desert', 'Cultural'], descEs: 'Aventura por el desierto con la comunidad wayúu.', descEn: 'Adventure through the desert with Wayúu community.', difficulty: 'Fácil' },
-    { id: 6, nameEs: 'Amazonas', nameEn: 'Amazon', regionEs: 'Amazonas', regionEn: 'Amazon', duration: '5D/4N', price: 1950000, people: '2-10', seasonEs: 'Todo el año', seasonEn: 'Year-round', tags: ['Amazonas', 'Amazon', 'Selva', 'Jungle', 'Fauna'], descEs: 'Inmersión en la selva amazónica con comunidades indígenas.', descEn: 'Amazon rainforest immersion with indigenous communities.', difficulty: 'Moderado' },
-    { id: 7, nameEs: 'Eje Cafetero', nameEn: 'Coffee Region', regionEs: 'Andes', regionEn: 'Andes', duration: '4D/3N', price: 1350000, people: '2-12', seasonEs: 'Todo el año', seasonEn: 'Year-round', tags: ['Andes', 'Café', 'Coffee', 'Cultural'], descEs: 'Experiencia cafetera completa con senderismo en Valle del Cocora.', descEn: 'Complete coffee experience with hiking in Cocora Valley.', difficulty: 'Fácil-Moderado' },
-    { id: 8, nameEs: 'Caño Cristales', nameEn: 'Caño Cristales', regionEs: 'Orinoquía', regionEn: 'Orinoquía', duration: '3D/2N', price: 1750000, people: '2-10', seasonEs: 'Jun-Nov', seasonEn: 'Jun-Nov', tags: ['Orinoquía', 'Río', 'River', 'Naturaleza', 'Nature'], descEs: 'Visita al río más hermoso del mundo con aguas multicolores.', descEn: 'Visit to the world most beautiful river with multicolored waters.', difficulty: 'Moderado' },
-    { id: 9, nameEs: 'Capurganá', nameEn: 'Capurganá', regionEs: 'Caribe', regionEn: 'Caribbean', duration: '4D/3N', price: 1450000, people: '2-10', seasonEs: 'Todo el año', seasonEn: 'Year-round', tags: ['Caribe', 'Caribbean', 'Playa', 'Beach', 'Relax'], descEs: 'Paraíso del Caribe sin acceso por carretera.', descEn: 'Caribbean paradise with no road access.', difficulty: 'Fácil' },
-    { id: 10, nameEs: 'Isla Gorgona', nameEn: 'Gorgona Island', regionEs: 'Pacífico', regionEn: 'Pacific', duration: '4D/3N', price: 2200000, people: '2-8', seasonEs: 'Jul-Oct', seasonEn: 'Jul-Oct', tags: ['Pacífico', 'Pacific', 'Isla', 'Island', 'Buceo', 'Diving'], descEs: 'Parque Nacional con ballenas y buceo de clase mundial.', descEn: 'National Park with whales and world-class diving.', difficulty: 'Moderado' }
-  ];
+<body>
 
-  const objections = {
-    es: [
-      { obj: 'Es muy caro', resp: 'Entiendo. Déjame mostrarte dónde va cada peso: hospedaje único operado por comunidades locales, alimentación con productos locales, guías especializados y transporte sostenible. Cada $5.000 COP genera 1 Punto Verde para proyectos ambientales verificables.', type: 'Precio' },
-      { obj: 'Colombia es peligrosa', resp: 'En 2024 recibimos más de 7M turistas sin inconvenientes. Todos nuestros destinos están en zonas seguras certificadas por MinCIT con protocolos de seguridad.', type: 'Seguridad' },
-      { obj: 'No tengo tiempo ahora', resp: 'Sin problema. (1) Te envío paquetes prediseñados para explorar cuando quieras, o (2) Agendamos 10 minutos cuando te convenga. ¿Cuál prefieres?', type: 'Tiempo' },
-      { obj: 'No los conozco', resp: 'Es normal. Somos un equipo joven con atención personal del fundador y más de 500 viajeros satisfechos. Nuestra fortaleza es el programa de sostenibilidad y red de aliados locales.', type: 'Confianza' },
-      { obj: 'Necesito pensarlo', resp: 'Perfecto, tómate tu tiempo. Te envío resumen de 1 página: itinerario día a día, precios detallados, impacto de Puntos Verdes y testimonios. ¿A qué correo?', type: 'Indecisión' },
-      { obj: 'Voy a cotizar con otros', resp: 'Perfecto! Lo que nos diferencia es Puntos Verdes: comunidades con paridad de precios gracias a nuestra consultoría. Significa impacto verificable, experiencias auténticas y desarrollo local genuino.', type: 'Competencia' }
-    ],
-    en: [
-      { obj: 'Too expensive', resp: 'I understand. Let me show where each dollar goes: unique lodging operated by local communities, local food, specialized guides and sustainable transport. Every $5,000 COP generates 1 Green Point for verifiable environmental projects.', type: 'Price' },
-      { obj: 'Colombia is dangerous', resp: 'In 2024 we received 7M+ tourists without incident. All destinations are in safe zones certified by MinCIT with security protocols.', type: 'Security' },
-      { obj: 'No time now', resp: 'No problem. (1) I send pre-designed packages to explore anytime, or (2) We schedule 10 minutes when convenient. Which?', type: 'Time' },
-      { obj: 'Don\'t know you', resp: 'Normal. We\'re a young team with personal founder attention and 500+ satisfied travelers. Our strength is sustainability program and network of local allies.', type: 'Trust' },
-      { obj: 'Need to think', resp: 'Perfect, take your time. I\'ll send 1-page summary: day-by-day itinerary, detailed prices, Green Points impact and testimonials. What email?', type: 'Indecision' },
-      { obj: 'Will quote others', resp: 'Perfect! What differentiates us is Green Points: communities with price parity thanks to our consulting. Means verifiable impact, authentic experiences and genuine local development.', type: 'Competition' }
-    ]
-  };
+<header>
+  <h1>🌿 Econexa Travel – Sales Tool</h1>
+  <button onclick="setLang('es')">ES</button>
+  <button onclick="setLang('en')">EN</button>
+</header>
 
-  const filteredPackages = useMemo(() => {
-    return packages.filter(pkg => {
-      if (searchTerm === '') return true;
-      const searchLower = searchTerm.toLowerCase();
-      const name = language === 'es' ? pkg.nameEs : pkg.nameEn;
-      const region = language === 'es' ? pkg.regionEs : pkg.regionEn;
-      const desc = language === 'es' ? pkg.descEs : pkg.descEn;
-      return name.toLowerCase().includes(searchLower) || region.toLowerCase().includes(searchLower) || desc.toLowerCase().includes(searchLower) || pkg.tags.some(tag => tag.toLowerCase().includes(searchLower));
-    });
-  }, [searchTerm, language]);
+<main>
 
-  const formatPrice = (price) => new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }).format(price);
+<div class="section">
+  <p id="intro"></p>
+  <button onclick="answer('yes')">Sí</button>
+  <button onclick="answer('no')">No</button>
+</div>
 
-  const exportToCSV = () => {
-    const isEs = language === 'es';
-    let csv = isEs ? 'ECONEXA TRAVEL - HERRAMIENTA DE VENTAS 2025\n\n' : 'ECONEXA TRAVEL - SALES TOOL 2025\n\n';
-    csv += isEs ? 'CATALOGO DE PAQUETES\n' : 'PACKAGE CATALOG\n';
-    csv += 'ID,Nombre,Region,Duracion,Precio,Personas,Temporada,Tags,Dificultad,Descripcion\n';
-    packages.forEach(pkg => {
-      const name = isEs ? pkg.nameEs : pkg.nameEn;
-      const region = isEs ? pkg.regionEs : pkg.regionEn;
-      const season = isEs ? pkg.seasonEs : pkg.seasonEn;
-      const desc = isEs ? pkg.descEs : pkg.descEn;
-      csv += `${pkg.id},"${name}","${region}","${pkg.duration}","${formatPrice(pkg.price)}","${pkg.people}","${season}","${pkg.tags.join('; ')}","${pkg.difficulty}","${desc}"\n`;
-    });
-    csv += isEs ? '\n\nMANEJO DE OBJECIONES\n' : '\n\nOBJECTION HANDLING\n';
-    csv += 'Objecion,Respuesta,Tipo\n';
-    objections[language].forEach(obj => csv += `"${obj.obj}","${obj.resp}","${obj.type}"\n`);
-    const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `econexa_${language}_${new Date().toISOString().split('T')[0]}.csv`;
-    link.click();
-  };
+<div class="section hidden" id="packages"></div>
 
-  const tabs = language === 'es' ? ['📋 Flujo', '🛡️ Objeciones', '📦 Catálogo', '📊 Info'] : ['📋 Flow', '🛡️ Objections', '📦 Catalog', '📊 Info'];
+</main>
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-purple-600 to-pink-500 p-4">
-      <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden">
-        
-        <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white p-6">
-          <div className="flex justify-between items-center flex-wrap gap-4">
-            <div>
-              <h1 className="text-3xl font-bold">🌿 Econexa Travel</h1>
-              <p className="text-sm opacity-90 mt-1">{language === 'es' ? 'Sistema de Ventas 2025 - Herramienta Freelance' : 'Sales System 2025 - Freelance Tool'}</p>
-            </div>
-            <div className="flex gap-2">
-              <button onClick={() => setLanguage('es')} className={`px-4 py-2 rounded-lg font-semibold transition ${language === 'es' ? 'bg-white text-green-600' : 'bg-green-700'}`}>🇪🇸</button>
-              <button onClick={() => setLanguage('en')} className={`px-4 py-2 rounded-lg font-semibold transition ${language === 'en' ? 'bg-white text-green-600' : 'bg-green-700'}`}>🇺🇸</button>
-              <button onClick={exportToCSV} className="px-4 py-2 bg-white text-green-600 rounded-lg font-semibold hover:bg-gray-100 flex items-center gap-2"><Download size={16} />CSV</button>
-            </div>
-          </div>
-        </div>
+<script>
+let lang = 'es';
 
-        <div className="flex bg-gray-100 border-b overflow-x-auto">
-          {tabs.map((tab, idx) => (
-            <button key={idx} onClick={() => setCurrentTab(idx)} className={`px-6 py-3 font-medium whitespace-nowrap border-b-4 transition ${currentTab === idx ? 'border-green-500 bg-white text-green-600' : 'border-transparent hover:bg-white/50'}`}>{tab}</button>
-          ))}
-        </div>
+const texts = {
+  es: {
+    intro: "Hola, ¿has escuchado del turismo sostenible?",
+    yes: "Genial. Estas son algunas experiencias:",
+    no: "Es viajar minimizando impacto. Mira estas experiencias:"
+  },
+  en: {
+    intro: "Hi, have you heard about sustainable tourism?",
+    yes: "Great. These are some experiences:",
+    no: "It’s travel with low impact. See these experiences:"
+  }
+};
 
-        <div className="p-6">
-          
-          {currentTab === 0 && (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold">{language === 'es' ? '📋 Flujo de Conversación' : '📋 Conversation Flow'}</h2>
-              
-              <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded">
-                <p className="text-sm text-green-800">{language === 'es' ? '💡 Sigue este flujo para guiar al cliente desde el contacto inicial hasta el cierre.' : '💡 Follow this flow to guide client from initial contact to close.'}</p>
-              </div>
+const packages = [
+  { nameEs:"Nuquí – Ballenas", nameEn:"Nuquí – Whales", price:1850000 },
+  { nameEs:"Ciudad Perdida", nameEn:"Lost City", price:1650000 },
+  { nameEs:"Tayrona & Minca", nameEn:"Tayrona & Minca", price:1450000 }
+];
 
-              <div className="space-y-4">
-                <div className="border-2 border-gray-200 rounded-lg p-5 hover:shadow-lg transition">
-                  <div className="flex gap-4">
-                    <div className="bg-green-100 text-green-700 rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">1</div>
-                    <div className="flex-1">
-                      <h3 className="font-bold text-lg mb-3">{language === 'es' ? '¡Hola! [Nombre], ¿Has escuchado del turismo sostenible?' : 'Hi! [Name], have you heard about sustainable tourism?'}</h3>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="bg-green-50 p-4 rounded-lg">
-                          <div className="font-bold text-green-700 mb-2">✅ {language === 'es' ? 'SÍ' : 'YES'}</div>
-                          <p className="text-sm text-gray-700">{language === 'es' ? 'Genial 💚 En Econexa Travel diseñamos viajes donde cada experiencia aporta a la conservación y comunidades locales. ¿Qué te gustaría vivir: Senderismo, Avistamiento de fauna, o Aventura?' : 'Great 💚 At Econexa Travel we design trips where each experience contributes to conservation and local communities. What would you like: Hiking, Wildlife watching, or Adventure?'}</p>
-                        </div>
-                        <div className="bg-red-50 p-4 rounded-lg">
-                          <div className="font-bold text-red-700 mb-2">❌ {language === 'es' ? 'NO' : 'NO'}</div>
-                          <p className="text-sm text-gray-700">{language === 'es' ? 'Es un tipo de viaje donde tu visita minimiza el impacto ambiental y apoya el desarrollo local. Podemos diseñar tu experiencia en senderismo, avistamiento de fauna o aventura.' : 'Travel that minimizes environmental impact and supports local development. We can design your experience in hiking, wildlife watching or adventure.'}</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="border-2 border-gray-200 rounded-lg p-5">
-                  <div className="flex gap-4">
-                    <div className="bg-blue-100 text-blue-700 rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">2</div>
-                    <div className="flex-1">
-                      <h3 className="font-bold text-lg mb-2">{language === 'es' ? '¿Quién viaja?' : 'Who travels?'}</h3>
-                      <p className="text-sm text-gray-700 mb-3">{language === 'es' ? '¿Es un viaje solo para ti, con tu pareja, familia, o grupo de amigos?' : 'Is it a trip just for you, with partner, family, or group of friends?'}</p>
-                      <div className="flex flex-wrap gap-2">
-                        <span className="px-3 py-1 bg-gray-100 rounded-full text-sm">Solo</span>
-                        <span className="px-3 py-1 bg-gray-100 rounded-full text-sm">{language === 'es' ? 'Pareja' : 'Couple'}</span>
-                        <span className="px-3 py-1 bg-gray-100 rounded-full text-sm">{language === 'es' ? 'Familia' : 'Family'}</span>
-                        <span className="px-3 py-1 bg-gray-100 rounded-full text-sm">{language === 'es' ? 'Amigos' : 'Friends'}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="border-2 border-gray-200 rounded-lg p-5">
-                  <div className="flex gap-4">
-                    <div className="bg-purple-100 text-purple-700 rounded-full w-10 h-10 flex items-center justify-center font-bold flex-shrink-0">3</div>
-                    <div className="flex-1">
-                      <h3 className="font-bold text-lg mb-2">{language === 'es' ? 'Cierre' : 'Closing'}</h3>
-                      <p className="text-sm text-gray-700">{language === 'es' ? 'Perfecto [Nombre]. En 5 horas te envío la propuesta completa. Agendemos una llamada mañana para revisarla. ¿Te funciona?' : 'Perfect [Name]. Within 5 hours I send the complete proposal. Let\'s schedule a call tomorrow to review. Does it work?'}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
-                <h4 className="font-bold text-yellow-800 mb-2">{language === 'es' ? '💚 Programa Puntos Verdes' : '💚 Green Points Program'}</h4>
-                <p className="text-sm text-yellow-800">{language === 'es' ? 'Acumula 1 Punto Verde por cada $5.000 invertidos. Redímelos en proyectos de restauración y educación ambiental.' : 'Earn 1 Green Point for every $5,000 invested. Redeem in restoration and environmental education projects.'}</p>
-              </div>
-            </div>
-          )}
-
-          {currentTab === 1 && (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold">{language === 'es' ? '🛡️ Manejo de Objeciones' : '🛡️ Objection Handling'}</h2>
-              <div className="grid md:grid-cols-2 gap-4">
-                {objections[language].map((obj, idx) => (
-                  <div key={idx} className="border-2 border-gray-200 rounded-lg p-5 hover:shadow-lg transition">
-                    <div className="flex items-start gap-3 mb-3">
-                      <span className="text-2xl">🚧</span>
-                      <div>
-                        <h3 className="font-bold text-red-700 text-lg">{obj.obj}</h3>
-                        <span className="text-xs bg-gray-100 px-2 py-1 rounded-full">{obj.type}</span>
-                      </div>
-                    </div>
-                    <div className="bg-green-50 p-4 rounded-lg">
-                      <p className="text-sm text-gray-700">{obj.resp}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {currentTab === 2 && (
-            <div className="space-y-6">
-              <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-bold">{language === 'es' ? '📦 Catálogo de Paquetes' : '📦 Package Catalog'}</h2>
-                <span className="text-sm text-gray-600">{filteredPackages.length} {language === 'es' ? 'paquetes' : 'packages'}</span>
-              </div>
-
-              <div className="relative">
-                <Search className="absolute left-3 top-3 text-gray-400" size={20} />
-                <input
-                  type="text"
-                  placeholder={language === 'es' ? 'Buscar por nombre, región, tags...' : 'Search by name, region, tags...'}
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-10 py-3 border-2 border-gray-300 rounded-lg focus:border-green-500 focus:outline-none"
-                />
-                {searchTerm && (
-                  <button onClick={() => setSearchTerm('')} className="absolute right-3 top-3 text-gray-400 hover:text-gray-600">
-                    <X size={20} />
-                  </button>
-                )}
-              </div>
-
-              <div className="grid gap-4">
-                {filteredPackages.map(pkg => {
-                  const name = language === 'es' ? pkg.nameEs : pkg.nameEn;
-                  const region = language === 'es' ? pkg.regionEs : pkg.regionEn;
-                  const season = language === 'es' ? pkg.seasonEs : pkg.seasonEn;
-                  const desc = language === 'es' ? pkg.descEs : pkg.descEn;
-                  
-                  return (
-                    <div key={pkg.id} className="border-2 border-gray-200 rounded-lg p-5 hover:shadow-lg hover:border-green-500 transition">
-                      <div className="flex justify-between items-start mb-3">
-                        <div className="flex-1">
-                          <h3 className="text-xl font-bold text-gray-800 mb-1">{name}</h3>
-                          <p className="text-sm text-gray-600">{desc}</p>
-                        </div>
-                        <div className="text-right ml-4">
-                          <div className="text-2xl font-bold text-green-600">{formatPrice(pkg.price)}</div>
-                          <div className="text-xs text-gray-500">{language === 'es' ? 'por persona' : 'per person'}</div>
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                          <MapPin size={16} className="text-green-600" />
-                          <span>{region}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                          <Calendar size={16} className="text-green-600" />
-                          <span>{pkg.duration}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-600">
-                          <Users size={16} className="text-green-600" />
-                          <span>{pkg.people}</span>
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          <span className="font-semibold">{season}</span>
-                        </div>
-                      </div>
-                      <div className="flex flex-wrap gap-2 mb-3">
-                        {pkg.tags.slice(0, 6).map((tag, i) => (
-                          <span key={i} className="px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">{tag}</span>
-                        ))}
-                      </div>
-                      <div className="flex justify-between items-center pt-3 border-t">
-                        <span className="text-sm font-semibold text-gray-600">{pkg.difficulty}</span>
-                        <span className="text-xs bg-green-600 text-white px-3 py-1 rounded-full font-semibold">ID: {pkg.id}</span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {currentTab === 3 && (
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold">{language === 'es' ? '📊 Información del Sistema' : '📊 System Information'}</h2>
-              
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 rounded-lg p-6">
-                  <h3 className="text-xl font-bold text-blue-800 mb-4">{language === 'es' ? '🎯 Cómo Usar' : '🎯 How to Use'}</h3>
-                  <ul className="space-y-2 text-sm text-blue-900">
-                    <li className="flex items-start gap-2">
-                      <span className="text-blue-600 font-bold">1.</span>
-                      <span>{language === 'es' ? 'Usa el Flujo para guiar conversaciones con clientes' : 'Use Flow to guide conversations with clients'}</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-blue-600 font-bold">2.</span>
-                      <span>{language === 'es' ? 'Consulta Objeciones para respuestas preparadas' : 'Check Objections for prepared responses'}</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-blue-600 font-bold">3.</span>
-                      <span>{language === 'es' ? 'Busca en Catálogo por nombre, región o tags' : 'Search Catalog by name, region or tags'}</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="text-blue-600 font-bold">4.</span>
-                      <span>{language === 'es' ? 'Exporta a CSV para usar en Google Sheets' : 'Export to CSV to use in Google Sheets'}</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 rounded-lg p-6">
-                  <h3 className="text-xl font-bold text-green-800 mb-4">{language === 'es' ? '📈 Estadísticas' : '📈 Statistics'}</h3>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-green-900">{language === 'es' ? 'Total Paquetes' : 'Total Packages'}</span>
-                      <span className="text-2xl font-bold text-green-700">{packages.length}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-green-900">{language === 'es' ? 'Objeciones Preparadas' : 'Prepared Objections'}</span>
-                      <span className="text-2xl font-bold text-green-700">{objections[language].length}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-green-900">{language === 'es' ? 'Precio Promedio' : 'Average Price'}</span>
-                      <span className="text-2xl font-bold text-green-700">{formatPrice(Math.round(packages.reduce((sum, pkg) => sum + pkg.price, 0) / packages.length))}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-purple-50 border-2 border-purple-200 rounded-lg p-6">
-                <h3 className="text-xl font-bold text-purple-800 mb-4">{language === 'es' ? '💡 Tips de Ventas' : '💡 Sales Tips'}</h3>
-                <ul className="space-y-2 text-sm text-purple-900">
-                  <li className="flex items-start gap-2">
-                    <span className="text-purple-600">✓</span>
-                    <span>{language === 'es' ? 'Siempre menciona el programa Puntos Verdes - diferenciador clave' : 'Always mention Green Points program - key differentiator'}</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-purple-600">✓</span>
-                    <span>{language === 'es' ? 'Personaliza según el perfil: aventurero, cultural, relajación' : 'Personalize by profile: adventurous, cultural, relaxation'}</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-purple-600">✓</span>
-                    <span>{language === 'es' ? 'Usa el buscador para encontrar rápido por tags o región' : 'Use search to quickly find by tags or region'}</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-purple-600">✓</span>
-                    <span>{language === 'es' ? 'Cierra con urgencia: plazas limitadas en temporada alta' : 'Close with urgency: limited spots in high season'}</span>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="bg-gradient-to-r from-orange-50 to-red-50 border-2 border-orange-200 rounded-lg p-6">
-                <h3 className="text-xl font-bold text-orange-800 mb-4">{language === 'es' ? '📞 Contacto Econexa' : '📞 Econexa Contact'}</h3>
-                <div className="grid md:grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="font-semibold text-orange-900">WhatsApp:</p>
-                    <p className="text-orange-800">+57 XXX XXX XXXX</p>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-orange-900">Email:</p>
-                    <p className="text-orange-800">contacto@econexa.travel</p>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-orange-900">Instagram:</p>
-                    <p className="text-orange-800">@econexatravel</p>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-orange-900">Web:</p>
-                    <p className="text-orange-800">www.econexa.travel</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-        </div>
-      </div>
-    </div>
-  );
+function setLang(l){
+  lang = l;
+  document.getElementById("intro").innerText = texts[lang].intro;
+  document.getElementById("packages").classList.add("hidden");
 }
 
+function answer(type){
+  const box = document.getElementById("packages");
+  box.innerHTML = `<p>${texts[lang][type]}</p>`;
+  packages.forEach(p=>{
+    box.innerHTML += `
+      <div class="package">
+        <strong>${lang==='es'?p.nameEs:p.nameEn}</strong>
+        <div class="price">${formatPrice(p.price)}</div>
+      </div>`;
+  });
+  box.classList.remove("hidden");
+}
+
+function formatPrice(p){
+  return new Intl.NumberFormat(lang==='es'?'es-CO':'en-US',
+    {style:'currency',currency:'COP',maximumFractionDigits:0}).format(p);
+}
+
+setLang('es');
+</script>
+
+</body>
+</html>
