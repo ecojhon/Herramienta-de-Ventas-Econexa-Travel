@@ -4,152 +4,645 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guión Prospección Econexa Travel</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+   <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background: #FEFEF8;
-            color: #1A472A;
-        }
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background: #FEFEF8;
+        color: #1A472A;
+    }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: #FEFEF8;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(45, 80, 22, 0.15);
-        }
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: #FEFEF8;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(45, 80, 22, 0.15);
+    }
 
-        .header {
-            background: #2D5016;
-            color: #FEFEF8;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .header {
+        background: #2D5016;
+        color: #FEFEF8;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-        .tabs {
-            display: flex;
-            background: #fffdc1;
-            border-bottom: 2px solid #326D12;
-        }
+    .tabs {
+        display: flex;
+        background: #fffdc1;
+        border-bottom: 2px solid #326D12;
+    }
 
-        .tab {
-            padding: 12px 24px;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
-            color: #1A472A;
-        }
+    .tab {
+        padding: 12px 24px;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s;
+        color: #1A472A;
+    }
 
-        .tab:hover {
-            background: #feffe9;
-        }
+    .tab:hover {
+        background: #feffe9;
+    }
 
-        .tab.active {
-            border-bottom-color: #FF6B35;
-            background: #FEFEF8;
-            font-weight: bold;
-            color: #2D5016;
-        }
+    .tab.active {
+        border-bottom-color: #FF6B35;
+        background: #FEFEF8;
+        font-weight: bold;
+        color: #2D5016;
+    }
 
-        .sheet-content {
-            display: none;
-            padding: 20px;
-        }
+    .sheet-content {
+        display: none;
+        padding: 20px;
+    }
 
-        .sheet-content.active {
-            display: block;
-        }
+    .sheet-content.active {
+        display: block;
+    }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
 
-        th {
-            background: #326D12;
-            padding: 12px 8px;
-            text-align: left;
-            font-weight: 600;
-            border: 1px solid #2D5016;
-            position: sticky;
-            top: 0;
-            color: #FEFEF8;
-        }
+    th {
+        background: #326D12;
+        padding: 12px 8px;
+        text-align: left;
+        font-weight: 600;
+        border: 1px solid #2D5016;
+        position: sticky;
+        top: 0;
+        color: #FEFEF8;
+    }
 
-        td {
-            padding: 10px 8px;
-            border: 1px solid #d8e2cf;
-            vertical-align: top;
-        }
+    td {
+        padding: 10px 8px;
+        border: 1px solid #d8e2cf;
+        vertical-align: top;
+    }
 
-        .col-numero { width: 50px; }
-        .col-pregunta { width: 25%; }
-        .col-respuesta { width: 10%; }
-        .col-script { width: 35%; }
-        .col-siguiente { width: 15%; }
-        .col-notas { width: 15%; }
+    .si {
+        background: #e6f4ea;
+        font-weight: bold;
+        color: #2D5016;
+    }
 
-        .si { 
-            background: #e6f4ea;
-            font-weight: bold;
-            color: #2D5016;
-        }
+    .no {
+        background: #fdecea;
+        font-weight: bold;
+        color: #8b1e1e;
+    }
 
-        .no { 
-            background: #fdecea;
-            font-weight: bold;
-            color: #8b1e1e;
-        }
+    .destacado {
+        background: #fffdc1;
+        font-weight: bold;
+    }
 
-        .destacado {
-            background: #fffdc1;
-            font-weight: bold;
-        }
+    .btn-export {
+        background: #FF6B35;
+        color: #FEFEF8;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 600;
+    }
 
-        .emoji {
-            font-size: 1.1em;
-        }
+    .btn-export:hover {
+        background: #e85c2a;
+    }
 
-        .btn-export {
-            background: #FF6B35;
-            color: #FEFEF8;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-        }
+    .objecion-titulo {
+        font-weight: bold;
+        color: #8b1e1e;
+    }
 
-        .btn-export:hover {
-            background: #e85c2a;
-        }
-
-        .objecion-titulo {
-            font-weight: bold;
-            color: #8b1e1e;
-        }
-
-        .respuesta-objecion {
-            background: #e6f4ea;
-            padding: 8px;
-            border-radius: 4px;
-            margin-top: 4px;
-            color: #1A472A;
-        }
-    </style>
+    .respuesta-objecion {
+        background: #e6f4ea;
+        padding: 8px;
+        border-radius: 4px;
+        margin-top: 4px;
+        color: #1A472A;
+    }
+</style>
 </head>
 <body>
-<!-- TODO el HTML y JS permanece EXACTAMENTE IGUAL al que enviaste -->
+    <div class="container">
+        <div class="header">
+            <h1>📊 Guión Prospección Outbound - Econexa Travel</h1>
+            <button class="btn-export" onclick="exportToCSV()">⬇️ Exportar CSV</button>
+        </div>
+        
+        <div class="tabs">
+            <div class="tab active" onclick="showSheet(0)">Flujo Principal</div>
+            <div class="tab" onclick="showSheet(1)">Preguntas Calificación</div>
+            <div class="tab" onclick="showSheet(2)">Objeciones</div>
+            <div class="tab" onclick="showSheet(3)">Destinos</div>
+        </div>
+        
+        <div class="sheet-content active" id="sheet0">
+            <h2>Flujo de Conversación Principal</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-numero">#</th>
+                        <th class="col-pregunta">Pregunta Inicial</th>
+                        <th class="col-respuesta">Respuesta</th>
+                        <th class="col-script">Script de Respuesta</th>
+                        <th class="col-siguiente">Siguiente Paso</th>
+                        <th class="col-notas">Notas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>¡Hola! [Nombre], Te pregunto algo rápido: ¿Has escuchado del turismo sostenible?</td>
+                        <td class="si">SÍ</td>
+                        <td>Genial 💚 En Econexa Travel diseñamos viajes donde cada experiencia aporta a la conservación, las comunidades locales y al bienestar del viajero. Cuéntame, ¿qué te gustaría vivir más en tu próximo viaje: Senderismo, Avistamiento de fauna y flora o Actividades de aventura?</td>
+                        <td>Ir a categoría elegida</td>
+                        <td>Opening simple y directo</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>¡Hola! [Nombre], Te pregunto algo rápido: ¿Has escuchado del turismo sostenible?</td>
+                        <td class="no">NO</td>
+                        <td>Es un tipo de viaje donde tu visita minimiza el impacto ambiental y apoya el desarrollo local, protegiendo el destino para futuras generaciones. Según tus intereses, podemos diseñar tu experiencia enfocada en senderismo, avistamiento de fauna y flora, o actividades de aventura.</td>
+                        <td>Preguntar por categoría de interés</td>
+                        <td>Educar primero</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Hola [Nombre], ¿cómo vas? Dime algo: ¿alguna vez has vivido una experiencia de turismo comunitario o has oído hablar de él?</td>
+                        <td class="si">SÍ</td>
+                        <td>Qué bueno que te interese, [Nombre] 🌱 Soy Leidy. Trabajamos principalmente con tres categorías: Selva, océano o montaña, todas operadas por las comunidades locales. ¿Qué tipo de experiencias te llaman más la atención?</td>
+                        <td>Elegir ecosistema</td>
+                        <td>Variante turismo comunitario</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Hola [Nombre], ¿cómo vas? Dime algo: ¿alguna vez has vivido una experiencia de turismo comunitario o has oído hablar de él?</td>
+                        <td class="no">NO</td>
+                        <td>Entiendo 🌿 Soy Leidy. El Turismo Comunitario es una forma de viajar donde las comunidades te reciben y comparten su cultura contigo. Es un tipo de viaje donde las propias comunidades locales diseñan y operan las experiencias, así tu visita beneficia directamente a quienes te reciben. Lo hacemos a través de experiencias en distintas regiones: Costa Caribe, Costa Pacífica, Andina, Llanos o el Amazonas. Escoge la que más te llame la atención.</td>
+                        <td>Elegir región</td>
+                        <td>Explicar concepto + regiones</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Hola, [Nombre]. ¿Estás familiarizado con el turismo regenerativo y su impacto en las comunidades?</td>
+                        <td class="si">SÍ</td>
+                        <td>Qué bueno que te interese, [Nombre] 🌱 Soy Leidy. El turismo regenerativo va más allá de no hacer daño: busca que cada viaje deje los ecosistemas, comunidades y culturas locales en mejor estado del que estaban antes de tu visita. Cuéntame, ¿qué tipo de experiencias te llaman más la atención: Selva, océano o montaña?</td>
+                        <td>Elegir ecosistema</td>
+                        <td>Variante regenerativa</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Hola, [Nombre]. ¿Estás familiarizado con el turismo regenerativo y su impacto en las comunidades?</td>
+                        <td class="no">NO</td>
+                        <td>Es un tipo de viaje donde tu visita ayuda a mejorar activamente el entorno y a fortalecer la comunidad que te recibe, dejando el destino mejor de como lo encontraste. Trabajamos principalmente con tres categorías: Selva, océano o montaña, todas operadas por las comunidades locales. ¿Qué tipo de experiencias te llaman más la atención?</td>
+                        <td>Elegir ecosistema</td>
+                        <td>Definición + opciones</td>
+                    </tr>
+                    <tr class="destacado">
+                        <td colspan="6"><strong>FASE DE SELECCIÓN DE EXPERIENCIA</strong></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Lead elige categoría: Senderismo</td>
+                        <td>-</td>
+                        <td>Para la categoría, contamos con 3 experiencias emblemáticas:<br>
+                        • Nevado del Cocuy - Desafío de alta montaña<br>
+                        • Ciudad Perdida - Inmersión cultural ancestral<br>
+                        • Tayrona & Minca - Combinación playa-montaña<br>
+                        ¿Alguna resuena más contigo?</td>
+                        <td>Lead elige destino específico</td>
+                        <td>Opciones concretas</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Lead elige categoría: Avistamiento de fauna y flora</td>
+                        <td>-</td>
+                        <td>Para la categoría, contamos con 3 experiencias emblemáticas:<br>
+                        • Ballenas jorobadas en Nuquí (Pacífico colombiano)<br>
+                        • Flamencos rosados en La Guajira (desierto)<br>
+                        • Liberación de tortugas marinas (Pacífico)<br>
+                        ¿Con cuál te identificas más?</td>
+                        <td>Lead elige destino específico</td>
+                        <td>Experiencias únicas</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Lead elige categoría: Actividades de aventura</td>
+                        <td>-</td>
+                        <td>Para la categoría, contamos con 3 experiencias emblemáticas:<br>
+                        • Aventura 4x4<br>
+                        • Exploración de Cuevas o espeleología<br>
+                        • Rafting y escalada<br>
+                        ¿Con cuál te identificas más?</td>
+                        <td>Lead elige destino específico</td>
+                        <td>Actividades adrenalina</td>
+                    </tr>
+                    <tr class="destacado">
+                        <td colspan="6"><strong>EJEMPLO: LEAD ELIGE NUQUÍ (BALLENAS)</strong></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>Lead elige Nuquí para avistamiento de ballenas</td>
+                        <td>-</td>
+                        <td>Nuquí para avistamiento de ballenas es una elección perfecta. Esta experiencia es de esas que la gente recuerda toda la vida y siempre quiere compartir.<br><br>Cuéntame, ¿quién más estaría contigo viviendo esta aventura? ¿Es un viaje solo para ti, con tu pareja, familia, o planeas llevar un grupo de amigos?</td>
+                        <td>Definir tipo de grupo</td>
+                        <td>Validar decisión + calificar</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>¿Quién viaja?</td>
+                        <td>-</td>
+                        <td>Opciones: Solo / Pareja / Familia / Amigos</td>
+                        <td>Preguntar tipo de alojamiento</td>
+                        <td>Definir número personas</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>Tipo de alojamiento</td>
+                        <td>-</td>
+                        <td>Entendido. Para [número/tipo mencionado], tengo opciones que van desde [opción íntima/privada] hasta [opción compartida/económica]. ¿Qué estilo les llama más la atención: privacidad total en su propio espacio, o prefieren un ambiente más comunitario donde puedan conocer otros viajeros conscientes?</td>
+                        <td>Privado o Compartido</td>
+                        <td>Calificar presupuesto indirecto</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>¿Ya tienen fechas en mente?</td>
+                        <td class="si">SÍ</td>
+                        <td>Perfecto, entonces estamos hablando de [número de personas] en [tipo de acomodación] para avistamiento de ballenas en Nuquí. ¿Qué fechas tienen en mente?</td>
+                        <td>Validar fechas con temporada</td>
+                        <td>Confirmar detalles</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>¿Ya tienen fechas en mente?</td>
+                        <td class="no">NO</td>
+                        <td>Te cuento: la temporada de ballenas en Nuquí va de julio a octubre, que es cuando las crías y las madres están activas cerca de la costa. Además, el clima es más estable - menos lluvias intensas. ¿Qué fechas tienes disponibles en estos meses?</td>
+                        <td>Lead propone fechas</td>
+                        <td>Educar sobre mejor época</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>Lead da fechas en temporada alta (julio-sept)</td>
+                        <td>-</td>
+                        <td>Para asegurar disponibilidad de cabaña para [número] en esas fechas, necesito verificar con nuestros aliados en Nuquí. ¿Qué tan flexibles son con los días específicos?</td>
+                        <td>Evaluar flexibilidad</td>
+                        <td>Gestionar expectativas</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>Lead da fechas en temporada baja (octubre)</td>
+                        <td>-</td>
+                        <td>Genial. Octubre es perfecto, muy buena elección para disfrutar del paisaje en temporada baja en Nuquí. Considero que la mejor época para avistar las ballenas es entre julio y octubre.</td>
+                        <td>Confirmar y cerrar</td>
+                        <td>Reforzar buena decisión</td>
+                    </tr>
+                    <tr class="destacado">
+                        <td colspan="6"><strong>CIERRE Y PRÓXIMOS PASOS</strong></td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>Cierre de prospección exitosa</td>
+                        <td>-</td>
+                        <td>Perfecto, [Nombre]. En máximo 5 horas te envío la propuesta completa con las mejores opciones para [experiencia] con [número de personas] en [fechas]. Incluye precios, itinerarios detallados y toda la info que necesitas.<br><br>Para que aproveches al máximo y no te quedes con dudas, agendemos una llamada rápida mañana a las [hora específica] para revisarla juntos. Te explico exactamente qué incluye cada opción y, si algo necesita ajuste, lo hacemos ahí mismo. ¿Te funciona mañana a esa hora?</td>
+                        <td>Agendar llamada</td>
+                        <td>Compromiso concreto</td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td>Mencionar Puntos Verdes</td>
+                        <td>-</td>
+                        <td>¿Ya conoces nuestros Puntos Verdes?<br><br>Creamos Puntos Verdes: un programa que distingue a nuestros viajeros. Acumula 1 Punto Verde por cada $5.000 invertidos en nuestras experiencias que podrás redimir financiando de forma directa proyectos de restauración de hábitats, energías limpias y talleres de educación ambiental en toda Colombia. 100% transparente con reportes auditables.</td>
+                        <td>Diferenciador clave</td>
+                        <td>Valor agregado único</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="sheet-content" id="sheet1">
+            <h2>Preguntas de Calificación (Si no hay datos completos)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-numero">#</th>
+                        <th>Pregunta</th>
+                        <th>Objetivo</th>
+                        <th>Notas</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="4" class="destacado"><strong>INTRO:</strong> Genial, [Nombre]. Para enviarte opciones que realmente se ajusten a lo que buscan, déjame hacerte 5 preguntas rápidas, no nos tomará más de 3 min. ¿De acuerdo?</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>¿Es su primera vez en Colombia o ya conocen algo del país?</td>
+                        <td>Evaluar experiencia previa</td>
+                        <td>Ayuda a personalizar itinerario</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>¿Cómo se ven en nivel de actividad?<br>
+                        - Activos (caminatas largas, aventura)<br>
+                        - Mix (un poco de acción, un poco de relax)<br>
+                        - Relax total</td>
+                        <td>Definir intensidad del viaje</td>
+                        <td>Crítico para diseñar experiencias</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>¿Alguien con restricciones alimentarias o movilidad limitada?</td>
+                        <td>Identificar necesidades especiales</td>
+                        <td>Evitar problemas operativos</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Sobre presupuesto: ¿tienen un presupuesto en mente? ¿Es por persona o por el total de los integrantes del grupo?</td>
+                        <td>Calificar capacidad económica</td>
+                        <td>Pregunta delicada pero necesaria</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>¿Qué los motiva para este viaje? ¿Celebran algo especial (aniversario, cumpleaños) o buscan desconectar y recargar energías?</td>
+                        <td>Entender motivación emocional</td>
+                        <td>Permite personalizar experiencia</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>En escala del 1 al 10, ¿qué tan importante es para ti que tu viaje beneficie directamente a las comunidades locales y cuide el medio ambiente?</td>
+                        <td>Validar fit con propuesta de valor</td>
+                        <td>Identificar clientes ideales</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="sheet-content" id="sheet2">
+            <h2>Manejo de Objeciones</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-numero">#</th>
+                        <th>Objeción</th>
+                        <th>Respuesta</th>
+                        <th>Tipo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td class="objecion-titulo">Es muy caro</td>
+                        <td class="respuesta-objecion">Entiendo. Déjame mostrarte dónde va cada peso...</td>
+                        <td>Precio</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td class="objecion-titulo">Colombia es peligrosa</td>
+                        <td class="respuesta-objecion">Según cifras oficiales del año 2024 hemos recibido más de 7M turistas de muchas partes del mundo sin ningún inconveniente que han disfrutado y regresado a sus destinos muy felices.</td>
+                        <td>Seguridad</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td class="objecion-titulo">No tengo tiempo ahora</td>
+                        <td class="respuesta-objecion">Sin problema. ¿Prefieres paquetes prediseñados o agendamos en unos 10 min (día, hora)?</td>
+                        <td>Tiempo</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td class="objecion-titulo">No los conozco</td>
+                        <td class="respuesta-objecion">Es normal que no nos conozcas aún. Somos un equipo joven pero con atención personal directa del fundador y más de 500 viajeros satisfechos. Además, nuestra fortaleza es el programa de sostenibilidad y una red consolidada de aliados locales que son actores clave en el desarrollo social y ambiental de Colombia. Al confiar en nosotros, confías también en estas comunidades que ayudan a construir un turismo responsable y auténtico.</td>
+                        <td>Confianza</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td class="objecion-titulo">Necesito pensarlo</td>
+                        <td class="respuesta-objecion">Perfecto, tómate tu tiempo. Para facilitarte la decisión, te envío un resumen en 1 página con itinerario día a día, precios detallados (qué incluye/no incluye) y el impacto de Puntos Verdes.</td>
+                        <td>Indecisión</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td class="objecion-titulo">Voy a cotizar con otros</td>
+                        <td class="respuesta-objecion">¡Perfecto! Comparar es lo mejor!<br><br>Lo que marca la diferencia es nuestro programa Puntos Verdes: las comunidades que operan las experiencias tienen política de paridad de precios gracias a nuestra consultoría en sostenibilidad. Para ti significa impacto real verificable, experiencias auténticas y saber que tu viaje genera desarrollo local. Eso no lo iguala nadie.</td>
+                        <td>Competencia</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td class="objecion-titulo">¿Para qué necesitan tanta información?</td>
+                        <td class="respuesta-objecion">Colombia es enorme y diversa, cada rincón tiene su magia única. Prefiero hacerte 10 preguntas ahora para diseñarte un itinerario perfecto que te encante, que enviarte una propuesta genérica que no te sirva de nada.</td>
+                        <td>Proceso</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td class="objecion-titulo">Solo mándame precios</td>
+                        <td class="respuesta-objecion">Opción A: Paquetes prediseñados [links]<br>Opción B: Para personalizar necesito 3 datos mínimos...</td>
+                        <td>Proceso</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="sheet-content" id="sheet3">
+            <h2>Catálogo de Destinos por Región</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Región</th>
+                        <th>Destinos</th>
+                        <th>Tipo de Experiencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Caribe</strong></td>
+                        <td>Parque Tayrona, Capurganá, La Guajira</td>
+                        <td>Mar</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pacífico</strong></td>
+                        <td>Nuquí, Isla Gorgona, Bahía Solano</td>
+                        <td>Mar</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Andes</strong></td>
+                        <td>Eje Cafetero, Bosques de Pandora, Nevado del Cocuy</td>
+                        <td>Montaña</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Orinoquía</strong></td>
+                        <td>Caño Cristales, Cerro Azul, Guape y Guejar</td>
+                        <td>Selva</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Amazonas</strong></td>
+                        <td>Leticia, Puerto Nariño, Cascada del Fin del Mundo</td>
+                        <td>Selva</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Montaña (opciones adicionales)</strong></td>
+                        <td>Nevado del Ruíz, Volcán Cunval, Ciudad Perdida</td>
+                        <td>Montaña</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Selva (opciones adicionales)</strong></td>
+                        <td>Amazonas, Capurganá, Nuquí</td>
+                        <td>Selva</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mar (opciones adicionales)</strong></td>
+                        <td>Isla Fuerte, La Guajira, Isla Gorgona</td>
+                        <td>Mar</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3 style="margin-top: 30px;">Experiencias Emblemáticas por Categoría</h3>
+            <table style="margin-top: 10px;">
+                <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Experiencia</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="3"><strong>Senderismo</strong></td>
+                        <td>Nevado del Cocuy</td>
+                        <td>Desafío de alta montaña</td>
+                    </tr>
+                    <tr>
+                        <td>Ciudad Perdida</td>
+                        <td>Inmersión cultural ancestral</td>
+                    </tr>
+                    <tr>
+                        <td>Tayrona & Minca</td>
+                        <td>Combinación playa-montaña</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3"><strong>Avistamiento Fauna y Flora</strong></td>
+                        <td>Ballenas jorobadas en Nuquí</td>
+                        <td>Pacífico colombiano</td>
+                    </tr>
+                    <tr>
+                        <td>Flamencos rosados en La Guajira</td>
+                        <td>Desierto</td>
+                    </tr>
+                    <tr>
+                        <td>Liberación de tortugas marinas</td>
+                        <td>Pacífico</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3"><strong>Actividades de Aventura</strong></td>
+                        <td>Aventura 4x4</td>
+                        <td>Exploración terrestre</td>
+                    </tr>
+                    <tr>
+                        <td>Exploración de Cuevas</td>
+                        <td>Espeleología</td>
+                    </tr>
+                    <tr>
+                        <td>Rafting y escalada</td>
+                        <td>Deportes extremos</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script>
+        function showSheet(index) {
+            const sheets = document.querySelectorAll('.sheet-content');
+            const tabs = document.querySelectorAll('.tab');
+            
+            sheets.forEach((sheet, i) => {
+                sheet.classList.toggle('active', i === index);
+            });
+            
+            tabs.forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
+            });
+        }
+        
+        function exportToCSV() {
+            let csv = 'FLUJO PRINCIPAL - ECONEXA TRAVEL\n\n';
+            csv += '#,Pregunta Inicial,Respuesta,Script de Respuesta,Siguiente Paso,Notas\n';
+            
+            const table = document.querySelector('#sheet0 table tbody');
+            const rows = table.querySelectorAll('tr');
+            
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length > 0) {
+                    const rowData = Array.from(cells).map(cell => {
+                        let text = cell.textContent.replace(/"/g, '""');
+                        return `"${text}"`;
+                    });
+                    csv += rowData.join(',') + '\n';
+                }
+            });
+            
+            csv += '\n\nPREGUNTAS DE CALIFICACIÓN\n\n';
+            csv += '#,Pregunta,Objetivo,Notas\n';
+            
+            const table2 = document.querySelector('#sheet1 table tbody');
+            const rows2 = table2.querySelectorAll('tr');
+            
+            rows2.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length > 0) {
+                    const rowData = Array.from(cells).map(cell => {
+                        let text = cell.textContent.replace(/"/g, '""');
+                        return `"${text}"`;
+                    });
+                    csv += rowData.join(',') + '\n';
+                }
+            });
+            
+            csv += '\n\nMANEJO DE OBJECIONES\n\n';
+            csv += '#,Objeción,Respuesta,Tipo\n';
+            
+            const table3 = document.querySelector('#sheet2 table tbody');
+            const rows3 = table3.querySelectorAll('tr');
+            
+            rows3.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                if (cells.length > 0) {
+                    const rowData = Array.from(cells).map(cell => {
+                        let text = cell.textContent.replace(/"/g, '""');
+                        return `"${text}"`;
+                    });
+                    csv += rowData.join(',') + '\n';
+                }
+            });
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'econexa_guion_prospeccion.csv');
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
 </body>
 </html>
