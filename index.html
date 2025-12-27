@@ -1,87 +1,73 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Econexa Travel | Sales Tool</title>
+<meta charset="UTF-8" />
+<title>Econexa Travel – Sales Tool</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <style>
-body{
-  font-family: Arial, Helvetica, sans-serif;
+body {
+  font-family: Arial, sans-serif;
   background:#f4f6f8;
   margin:0;
 }
-header{
-  background:#1f8f5f;
+header {
+  background:#1e8449;
   color:#fff;
   padding:20px;
 }
-header h1{margin:0;font-size:22px}
-header p{margin:5px 0 0;font-size:14px;opacity:.9}
+header h1 { margin:0; font-size:22px; }
+main { padding:20px; max-width:1200px; margin:auto; }
 
-.container{padding:20px;max-width:1200px;margin:auto}
-
-.tabs{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
+.section {
+  background:#fff;
+  border-radius:6px;
+  padding:20px;
   margin-bottom:20px;
 }
-.tab{
-  background:#e0e0e0;
-  padding:10px 14px;
-  border-radius:6px;
-  cursor:pointer;
+
+.step-title {
   font-weight:bold;
-  font-size:14px;
-}
-.tab.active{
-  background:#1f8f5f;
-  color:#fff;
+  color:#1e8449;
+  margin-bottom:10px;
 }
 
-.section{display:none}
-.section.active{display:block}
+.flow-box {
+  border-left:4px solid #1e8449;
+  padding:15px;
+  background:#f9fdfb;
+}
 
-.card{
+.choice {
+  margin-top:10px;
+}
+.choice button {
+  margin:5px;
+  padding:8px 14px;
+  border-radius:20px;
+  border:1px solid #1e8449;
   background:#fff;
-  border-radius:8px;
-  padding:16px;
-  margin-bottom:12px;
-  box-shadow:0 2px 6px rgba(0,0,0,.08)
-}
-
-.card h3{margin:0 0 8px}
-
-.button{
-  background:#1f8f5f;
-  color:#fff;
-  border:none;
-  padding:8px 12px;
-  border-radius:6px;
   cursor:pointer;
+}
+.choice button:hover {
+  background:#1e8449;
+  color:#fff;
+}
+
+.hidden { display:none; }
+
+.package {
+  border:1px solid #ddd;
+  border-radius:6px;
+  padding:15px;
+  margin-bottom:10px;
+}
+.price {
+  color:#1e8449;
   font-weight:bold;
-  margin-top:8px;
 }
-.button.secondary{
-  background:#555;
-}
-
-.script{
-  background:#eef7f2;
-  border-left:4px solid #1f8f5f;
-  padding:12px;
-  white-space:pre-wrap;
-  font-size:14px;
-}
-
-.badge{
-  display:inline-block;
-  background:#ddd;
-  padding:4px 8px;
-  border-radius:12px;
-  font-size:12px;
-  margin-right:6px;
+.lang {
+  float:right;
 }
 </style>
 </head>
@@ -90,143 +76,154 @@ header p{margin:5px 0 0;font-size:14px;opacity:.9}
 
 <header>
   <h1>🌿 Econexa Travel – Sales Tool</h1>
-  <p>Herramienta operativa para asesores</p>
+  <div class="lang">
+    <button onclick="setLang('es')">ES</button>
+    <button onclick="setLang('en')">EN</button>
+  </div>
 </header>
 
-<div class="container">
+<main>
 
-  <div class="tabs">
-    <div class="tab active" onclick="showTab(0)">Flujo</div>
-    <div class="tab" onclick="showTab(1)">Categorías</div>
-    <div class="tab" onclick="showTab(2)">Experiencias</div>
-    <div class="tab" onclick="showTab(3)">Script final</div>
-  </div>
-
-  <!-- FLUJO -->
-  <div class="section active">
-    <div class="card">
-      <h3>Apertura</h3>
-      <div class="script">
-Hola [Nombre], te pregunto algo rápido:
-¿Has escuchado del turismo sostenible?
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>Si responde SÍ</h3>
-      <div class="script">
-Genial 💚 En Econexa Travel diseñamos viajes donde cada experiencia aporta a la conservación y a las comunidades locales.
-Cuéntame, ¿qué te gustaría vivir más en tu próximo viaje?
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>Si responde NO</h3>
-      <div class="script">
-Es un tipo de viaje donde tu visita minimiza el impacto ambiental y apoya a las comunidades locales.
-Según tus intereses, podemos diseñar una experiencia de naturaleza, aventura o avistamiento de fauna.
-      </div>
+<!-- STEP 1 -->
+<div class="section">
+  <div class="step-title" id="t1">Apertura</div>
+  <div class="flow-box" id="s1">
+    <p id="q1">Hola [Nombre], te pregunto algo rápido: ¿has escuchado del turismo sostenible?</p>
+    <div class="choice">
+      <button onclick="go('yes1')">Sí</button>
+      <button onclick="go('no1')">No</button>
     </div>
   </div>
-
-  <!-- CATEGORÍAS -->
-  <div class="section">
-    <div class="card">
-      <h3>Categorías disponibles</h3>
-
-      <button class="button" onclick="selectCategory('fauna')">🐋 Avistamiento de fauna</button>
-      <button class="button" onclick="selectCategory('senderismo')">🥾 Senderismo</button>
-      <button class="button" onclick="selectCategory('aventura')">🧗 Aventura</button>
-    </div>
-  </div>
-
-  <!-- EXPERIENCIAS -->
-  <div class="section">
-    <div id="experiences"></div>
-  </div>
-
-  <!-- SCRIPT FINAL -->
-  <div class="section">
-    <div class="card">
-      <h3>Script listo para enviar</h3>
-      <div id="finalScript" class="script"></div>
-    </div>
-  </div>
-
 </div>
 
+<!-- STEP 2 -->
+<div class="section hidden" id="yes1">
+  <div class="step-title">Respuesta – Sí conoce</div>
+  <div class="flow-box">
+    En Econexa Travel diseñamos experiencias donde cada viaje aporta a la conservación y a las comunidades locales.
+    <br><br>
+    ¿Qué te gustaría vivir más?
+    <div class="choice">
+      <button onclick="go('senderismo')">Senderismo</button>
+      <button onclick="go('fauna')">Fauna & Flora</button>
+      <button onclick="go('aventura')">Aventura</button>
+    </div>
+  </div>
+</div>
+
+<div class="section hidden" id="no1">
+  <div class="step-title">Respuesta – No conoce</div>
+  <div class="flow-box">
+    Es una forma de viajar donde tu visita minimiza impactos y beneficia directamente a las comunidades locales.
+    <br><br>
+    ¿Qué tipo de experiencia te atrae más?
+    <div class="choice">
+      <button onclick="go('senderismo')">Senderismo</button>
+      <button onclick="go('fauna')">Fauna & Flora</button>
+      <button onclick="go('aventura')">Aventura</button>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<div class="section hidden" id="senderismo">
+  <div class="step-title">Senderismo – Experiencias</div>
+  <div class="flow-box">
+    <ul>
+      <li>Nevado del Cocuy – Alta montaña</li>
+      <li>Ciudad Perdida – Cultura ancestral</li>
+      <li>Tayrona & Minca – Playa + montaña</li>
+    </ul>
+    <button onclick="go('grupo')">Continuar</button>
+  </div>
+</div>
+
+<div class="section hidden" id="fauna">
+  <div class="step-title">Fauna & Flora – Experiencias</div>
+  <div class="flow-box">
+    <ul>
+      <li>Avistamiento de ballenas – Nuquí</li>
+      <li>Flamencos rosados – La Guajira</li>
+      <li>Liberación de tortugas – Pacífico</li>
+    </ul>
+    <button onclick="go('grupo')">Continuar</button>
+  </div>
+</div>
+
+<div class="section hidden" id="aventura">
+  <div class="step-title">Aventura – Experiencias</div>
+  <div class="flow-box">
+    <ul>
+      <li>4x4 Off-road</li>
+      <li>Rafting & escalada</li>
+      <li>Espeleología</li>
+    </ul>
+    <button onclick="go('grupo')">Continuar</button>
+  </div>
+</div>
+
+<!-- GROUP -->
+<div class="section hidden" id="grupo">
+  <div class="step-title">Tipo de grupo</div>
+  <div class="flow-box">
+    ¿Con quién viajas?
+    <div class="choice">
+      <button onclick="go('paquetes')">Solo</button>
+      <button onclick="go('paquetes')">Pareja</button>
+      <button onclick="go('paquetes')">Familia</button>
+      <button onclick="go('paquetes')">Amigos</button>
+    </div>
+  </div>
+</div>
+
+<!-- PACKAGES -->
+<div class="section hidden" id="paquetes">
+  <div class="step-title">Paquetes disponibles</div>
+
+  <div class="package">
+    <strong>Nuquí – Ballenas 4D/3N</strong>
+    <p>Incluye alojamiento, alimentación, guías locales</p>
+    <div class="price">Desde USD 820 / persona</div>
+  </div>
+
+  <div class="package">
+    <strong>Ciudad Perdida – Trek 5D</strong>
+    <p>Guías indígenas, alimentación, campamentos</p>
+    <div class="price">Desde USD 1.150 / persona</div>
+  </div>
+
+  <div class="package">
+    <strong>Tayrona & Minca – 4D</strong>
+    <p>Playa, montaña y cultura local</p>
+    <div class="price">Desde USD 740 / persona</div>
+  </div>
+
+  <button onclick="go('cierre')">Cerrar conversación</button>
+</div>
+
+<!-- CLOSE -->
+<div class="section hidden" id="cierre">
+  <div class="step-title">Cierre</div>
+  <div class="flow-box">
+    Perfecto, [Nombre]. Te enviaré en las próximas horas la propuesta completa con itinerario, precios y disponibilidad.
+    <br><br>
+    ¿Te parece si agendamos una llamada corta para revisarla juntos?
+  </div>
+</div>
+
+</main>
+
 <script>
-const DATA = {
-  fauna:[
-    {
-      name:"Nuquí – Avistamiento de ballenas",
-      price:"desde $1.680.000 COP",
-      text:`Nuquí para avistamiento de ballenas es una elección perfecta 🐋
-
-Es una experiencia operada por comunidades locales del Pacífico colombiano, ideal para viajeros que buscan conexión con la naturaleza.
-
-Los valores arrancan desde $1.680.000 COP por persona, dependiendo de fechas, ocupación y temporada.
-
-¿Quiénes estarían viajando contigo y para qué fechas te gustaría revisar disponibilidad?`
-    }
-  ],
-  senderismo:[
-    {
-      name:"Nevado del Cocuy – Alta montaña",
-      price:"desde $2.100.000 COP",
-      text:`El Nevado del Cocuy es una experiencia de alta montaña única en Colombia 🏔️
-
-Ideal para personas activas, con paisajes glaciares y caminatas guiadas responsables.
-
-Los valores arrancan desde $2.100.000 COP por persona.
-
-¿Viajarías solo, en pareja o en grupo y qué fechas tienes en mente?`
-    }
-  ],
-  aventura:[
-    {
-      name:"Rafting & naturaleza",
-      price:"desde $1.450.000 COP",
-      text:`Esta experiencia combina aventura y naturaleza en entornos seguros y operados localmente.
-
-Los valores arrancan desde $1.450.000 COP por persona.
-
-¿Te gustaría algo más intenso o un balance entre aventura y descanso?`
-    }
-  ]
-};
-
-function showTab(i){
-  document.querySelectorAll('.tab').forEach((t,idx)=>{
-    t.classList.toggle('active',idx===i)
-  })
-  document.querySelectorAll('.section').forEach((s,idx)=>{
-    s.classList.toggle('active',idx===i)
-  })
+function go(id){
+  document.getElementById(id).classList.remove('hidden');
+  document.getElementById(id).scrollIntoView({behavior:"smooth"});
 }
 
-function selectCategory(cat){
-  showTab(2)
-  const div=document.getElementById('experiences')
-  div.innerHTML=''
-  DATA[cat].forEach(e=>{
-    div.innerHTML+=`
-      <div class="card">
-        <h3>${e.name}</h3>
-        <span class="badge">${e.price}</span><br><br>
-        <button class="button" onclick="generateScript(\`${e.text}\`)">
-          Usar este guion
-        </button>
-      </div>
-    `
-  })
-}
-
-function generateScript(text){
-  showTab(3)
-  document.getElementById('finalScript').textContent=text
+function setLang(lang){
+  alert("Base preparada. Traducción EN se carga en siguiente iteración.");
 }
 </script>
 
 </body>
 </html>
+
