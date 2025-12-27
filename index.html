@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sales Tool (Herramienta de Ventas) Econexa Travel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;600;700&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
    <style>
     * {
         margin: 0;
@@ -12,7 +15,7 @@
     }
 
     body {
-        font-family: Arial, sans-serif;
+    font-family: 'Sora', Arial, sans-serif;
         padding: 20px;
         background: #FEFEF8;
         color: #1A472A;
@@ -136,6 +139,12 @@
         margin-top: 4px;
         color: #1A472A;
     }
+       h1, h2, h3, h4,
+th,
+.tab {
+    font-family: 'Raleway', sans-serif;
+    letter-spacing: 0.3px;
+}
 </style>
 </head>
 <body>
@@ -147,7 +156,7 @@
         alt="Econexa Travel"
         style="height:42px;"
     >
-                Sales Tool Econexa Travel
+                Herramienta de Ventas (Sales Tool) Econexa Travel
 </h1>
 
             <button class="btn-export" onclick="exportToCSV()">
@@ -161,7 +170,7 @@
         </div>
         
         <div class="sheet-content active" id="sheet0">
-            <h2>Flujo de Conversación Principal</h2>
+            <h2>Flujo de Conversación Principal (Se rompe el hielo con el cliente con un dato preciso sobre su perfil o intereses validados)</h2>
             <table>
                 <thead>
                     <tr>
@@ -654,4 +663,5 @@
     </script>
 </body>
 </html>
+
 
