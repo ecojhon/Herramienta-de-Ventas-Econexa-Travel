@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Econexa Travel | Sales Tool</title>
+
+<style>
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  background:#f4f6f8;
+  margin:0;
+}
+header{
+  background:#1f8f5f;
+  color:#fff;
+  padding:20px;
+}
+header h1{margin:0;font-size:22px}
+header p{margin:5px 0 0;font-size:14px;opacity:.9}
+
+.container{padding:20px;max-width:1200px;margin:auto}
+
+.tabs{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+.tab{
+  background:#e0e0e0;
+  padding:10px 14px;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:14px;
+}
+.tab.active{
+  background:#1f8f5f;
+  color:#fff;
+}
+
+.section{display:none}
+.section.active{display:block}
+
+.card{
+  background:#fff;
+  border-radius:8px;
+  padding:16px;
+  margin-bottom:12px;
+  box-shadow:0 2px 6px rgba(0,0,0,.08)
+}
+
+.card h3{margin:0 0 8px}
+
+.button{
+  background:#1f8f5f;
+  color:#fff;
+  border:none;
+  padding:8px 12px;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
+  margin-top:8px;
+}
+.button.secondary{
+  background:#555;
+}
+
+.script{
+  background:#eef7f2;
+  border-left:4px solid #1f8f5f;
+  padding:12px;
+  white-space:pre-wrap;
+  font-size:14px;
+}
+
+.badge{
+  display:inline-block;
+  background:#ddd;
+  padding:4px 8px;
+  border-radius:12px;
+  font-size:12px;
+  margin-right:6px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🌿 Econexa Travel – Sales Tool</h1>
+  <p>Herramienta operativa para asesores</p>
+</header>
+
+<div class="container">
+
+  <div class="tabs">
+    <div class="tab active" onclick="showTab(0)">Flujo</div>
+    <div class="tab" onclick="showTab(1)">Categorías</div>
+    <div class="tab" onclick="showTab(2)">Experiencias</div>
+    <div class="tab" onclick="showTab(3)">Script final</div>
+  </div>
+
+  <!-- FLUJO -->
+  <div class="section active">
+    <div class="card">
+      <h3>Apertura</h3>
+      <div class="script">
+Hola [Nombre], te pregunto algo rápido:
+¿Has escuchado del turismo sostenible?
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Si responde SÍ</h3>
+      <div class="script">
+Genial 💚 En Econexa Travel diseñamos viajes donde cada experiencia aporta a la conservación y a las comunidades locales.
+Cuéntame, ¿qué te gustaría vivir más en tu próximo viaje?
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Si responde NO</h3>
+      <div class="script">
+Es un tipo de viaje donde tu visita minimiza el impacto ambiental y apoya a las comunidades locales.
+Según tus intereses, podemos diseñar una experiencia de naturaleza, aventura o avistamiento de fauna.
+      </div>
+    </div>
+  </div>
+
+  <!-- CATEGORÍAS -->
+  <div class="section">
+    <div class="card">
+      <h3>Categorías disponibles</h3>
+
+      <button class="button" onclick="selectCategory('fauna')">🐋 Avistamiento de fauna</button>
+      <button class="button" onclick="selectCategory('senderismo')">🥾 Senderismo</button>
+      <button class="button" onclick="selectCategory('aventura')">🧗 Aventura</button>
+    </div>
+  </div>
+
+  <!-- EXPERIENCIAS -->
+  <div class="section">
+    <div id="experiences"></div>
+  </div>
+
+  <!-- SCRIPT FINAL -->
+  <div class="section">
+    <div class="card">
+      <h3>Script listo para enviar</h3>
+      <div id="finalScript" class="script"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const DATA = {
+  fauna:[
+    {
+      name:"Nuquí – Avistamiento de ballenas",
+      price:"desde $1.680.000 COP",
+      text:`Nuquí para avistamiento de ballenas es una elección perfecta 🐋
+
+Es una experiencia operada por comunidades locales del Pacífico colombiano, ideal para viajeros que buscan conexión con la naturaleza.
+
+Los valores arrancan desde $1.680.000 COP por persona, dependiendo de fechas, ocupación y temporada.
+
+¿Quiénes estarían viajando contigo y para qué fechas te gustaría revisar disponibilidad?`
+    }
+  ],
+  senderismo:[
+    {
+      name:"Nevado del Cocuy – Alta montaña",
+      price:"desde $2.100.000 COP",
+      text:`El Nevado del Cocuy es una experiencia de alta montaña única en Colombia 🏔️
+
+Ideal para personas activas, con paisajes glaciares y caminatas guiadas responsables.
+
+Los valores arrancan desde $2.100.000 COP por persona.
+
+¿Viajarías solo, en pareja o en grupo y qué fechas tienes en mente?`
+    }
+  ],
+  aventura:[
+    {
+      name:"Rafting & naturaleza",
+      price:"desde $1.450.000 COP",
+      text:`Esta experiencia combina aventura y naturaleza en entornos seguros y operados localmente.
+
+Los valores arrancan desde $1.450.000 COP por persona.
+
+¿Te gustaría algo más intenso o un balance entre aventura y descanso?`
+    }
+  ]
+};
+
+function showTab(i){
+  document.querySelectorAll('.tab').forEach((t,idx)=>{
+    t.classList.toggle('active',idx===i)
+  })
+  document.querySelectorAll('.section').forEach((s,idx)=>{
+    s.classList.toggle('active',idx===i)
+  })
+}
+
+function selectCategory(cat){
+  showTab(2)
+  const div=document.getElementById('experiences')
+  div.innerHTML=''
+  DATA[cat].forEach(e=>{
+    div.innerHTML+=`
+      <div class="card">
+        <h3>${e.name}</h3>
+        <span class="badge">${e.price}</span><br><br>
+        <button class="button" onclick="generateScript(\`${e.text}\`)">
+          Usar este guion
+        </button>
+      </div>
+    `
+  })
+}
+
+function generateScript(text){
+  showTab(3)
+  document.getElementById('finalScript').textContent=text
+}
+</script>
+
+</body>
+</html>
