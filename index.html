@@ -145,6 +145,37 @@ th,
     font-family: 'Raleway', sans-serif;
     letter-spacing: 0.3px;
 }
+       .btn-export:hover {
+    background: #e85c2a;
+}
+
+/* === LANGUAGE SWITCH === */
+.lang-switch {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-lang {
+    background: transparent;
+    border: 2px solid #FEFEF8;
+    color: #FEFEF8;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-family: 'Raleway', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.btn-lang:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.btn-lang.active {
+    background: #FF6B35;
+    border-color: #FF6B35;
+    color: #FEFEF8;
+}
 </style>
 </head>
 <body>
@@ -158,9 +189,11 @@ th,
     >
                 Herramienta de Ventas (Sales Tool) Econexa Travel
 </h1>
-
-            <button class="btn-export" onclick="exportToCSV()">
-        </div>
+    <div class="lang-switch">
+        <button class="btn-lang active" onclick="setLanguage('es')">🇪🇸 ES</button>
+        <button class="btn-lang" onclick="setLanguage('en')">🇬🇧 EN</button>
+    </div>
+</div>
         
         <div class="tabs">
             <div class="tab active" onclick="showSheet(0)">Flujo Principal</div>
@@ -660,8 +693,36 @@ th,
             link.click();
             document.body.removeChild(link);
         }
+        let currentLanguage = 'es';
+
+function setLanguage(lang) {
+    currentLanguage = lang;
+
+    document.querySelectorAll('.btn-lang').forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    if (lang === 'es') {
+        document.querySelector('.btn-lang:nth-child(1)').classList.add('active');
+        loadSpanish();
+    } else {
+        document.querySelector('.btn-lang:nth-child(2)').classList.add('active');
+        loadEnglish();
+    }
+}
+
+function loadSpanish() {
+    console.log('Idioma activo: Español');
+    // aquí luego conectamos textos ES
+}
+
+function loadEnglish() {
+    console.log('Active language: English');
+    // aquí luego conectamos textos EN
+}
     </script>
 </body>
 </html>
+
 
 
